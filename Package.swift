@@ -1,14 +1,19 @@
-// swift-tools-version:3.1
+// swift-tools-version:4.0
 
 import PackageDescription
 
 let package = Package(
     name: "LanguageServerProtocol",
-    targets: [
-        Target(name: "LanguageServerProtocol"),
-        Target(name: "JsonRpcProtocol", dependencies: ["LanguageServerProtocol"])
+    products: [
+        .library(
+            name: "LanguageServerProtocol",
+            targets: ["LanguageServerProtocol"]),
     ],
     dependencies: [
-        .Package(url: "https://github.com/owensd/json-swift.git", majorVersion: 2, minor: 0)
+        .package(url: "https://github.com/theguild/json-swift.git", from: "4.0.0"),
+    ],
+    targets: [
+        .target(name: "LanguageServerProtocol", dependencies: ["JSONLib"]),
+        .target(name: "JsonRpcProtocol", dependencies: ["LanguageServerProtocol"])
     ]
 )

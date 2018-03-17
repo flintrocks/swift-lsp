@@ -11,7 +11,7 @@ import os.log
 #endif
 
 @available(macOS 10.12, *)
-fileprivate let log = OSLog(subsystem: "com.kiadstudios.jsonrpcprotocol", category: "Encodable")
+fileprivate let log = OSLog(subsystem: "com.kiadstudios.jsonrpcprotocol", category: "TSEncodable")
 
 extension JSValue: AnyEncodable {
     public func encode() -> Any {
@@ -19,31 +19,31 @@ extension JSValue: AnyEncodable {
     }
 }
 
-extension String: Encodable {
+extension String: TSEncodable {
     public func encode() -> JSValue {
         return JSValue(self)
     }
 }
 
-extension Double: Encodable {
+extension Double: TSEncodable {
     public func encode() -> JSValue {
         return JSValue(self)
     }
 }
 
-extension Bool: Encodable {
+extension Bool: TSEncodable {
     public func encode() -> JSValue {
         return JSValue(self)
     }
 }
 
-extension Int: Encodable {
+extension Int: TSEncodable {
     public func encode() -> JSValue {
         return JSValue(Double(self))
     }
 }
 
-extension TextDocumentSync: Encodable {
+extension TextDocumentSync: TSEncodable {
     public func encode() -> JSValue {
         switch self {
         case .options(let options): return options.encode()
@@ -52,7 +52,7 @@ extension TextDocumentSync: Encodable {
     }
 }
 
-extension CodeLens: Encodable {
+extension CodeLens: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["range"] = range.encode()
@@ -63,7 +63,7 @@ extension CodeLens: Encodable {
     }
 }
 
-extension CodeLensOptions: Encodable {
+extension CodeLensOptions: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         if let resolveProvider = resolveProvider {
@@ -73,7 +73,7 @@ extension CodeLensOptions: Encodable {
     }
 }
 
-extension Command: Encodable {
+extension Command: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["title"] = title.encode()
@@ -85,7 +85,7 @@ extension Command: Encodable {
     }
 }
 
-extension CompletionOptions: Encodable {
+extension CompletionOptions: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         if let resolveProvider = resolveProvider {
@@ -99,7 +99,7 @@ extension CompletionOptions: Encodable {
     }
 }
 
-extension DocumentHighlight: Encodable {
+extension DocumentHighlight: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["range"] = range.encode()
@@ -110,7 +110,7 @@ extension DocumentHighlight: Encodable {
     }
 }
 
-extension DocumentLink: Encodable {
+extension DocumentLink: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["range"] = range.encode()
@@ -121,7 +121,7 @@ extension DocumentLink: Encodable {
     }
 }
 
-extension DocumentLinkOptions: Encodable {
+extension DocumentLinkOptions: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         if let resolveProvider = resolveProvider {
@@ -131,7 +131,7 @@ extension DocumentLinkOptions: Encodable {
     }
 }
 
-extension DocumentOnTypeFormattingOptions: Encodable {
+extension DocumentOnTypeFormattingOptions: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["firstTriggerCharacter"] = firstTriggerCharacter.encode()
@@ -142,7 +142,7 @@ extension DocumentOnTypeFormattingOptions: Encodable {
     }
 }
 
-extension ExecuteCommandOptions: Encodable {
+extension ExecuteCommandOptions: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         if let commands = commands {
@@ -153,7 +153,7 @@ extension ExecuteCommandOptions: Encodable {
     }
 }
 
-extension Hover: Encodable {
+extension Hover: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["contents"] = JSValue(contents.map { $0.encode() })
@@ -164,7 +164,7 @@ extension Hover: Encodable {
     }
 }
 
-extension InitializeResult: Encodable {
+extension InitializeResult: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["capabilities"] = capabilities.encode()
@@ -172,7 +172,7 @@ extension InitializeResult: Encodable {
     }
 }
 
-extension Location: Encodable {
+extension Location: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["uri"] = uri.encode()
@@ -181,7 +181,7 @@ extension Location: Encodable {
     }
 }
 
-extension Position: Encodable {
+extension Position: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["line"] = line.encode()
@@ -190,7 +190,7 @@ extension Position: Encodable {
     }
 }
 
-extension ServerCapabilities: Encodable {
+extension ServerCapabilities: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         if let textDocumentSync = textDocumentSync {
@@ -248,7 +248,7 @@ extension ServerCapabilities: Encodable {
     }
 }
 
-extension ShowMessageRequestParams: Encodable {
+extension ShowMessageRequestParams: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["type"] = type.encode()
@@ -260,7 +260,7 @@ extension ShowMessageRequestParams: Encodable {
     }
 }
 
-extension SignatureHelp: Encodable {
+extension SignatureHelp: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["signatures"] = JSValue(signatures.map { $0.encode() })
@@ -274,7 +274,7 @@ extension SignatureHelp: Encodable {
     }
 }
 
-extension SignatureHelpOptions: Encodable {
+extension SignatureHelpOptions: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         if let triggerCharacters = triggerCharacters {
@@ -284,7 +284,7 @@ extension SignatureHelpOptions: Encodable {
     }
 }
 
-extension SymbolInformation: Encodable {
+extension SymbolInformation: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["name"] = name.encode()
@@ -297,7 +297,7 @@ extension SymbolInformation: Encodable {
     }
 }
 
-extension TextDocumentSyncOptions: Encodable {
+extension TextDocumentSyncOptions: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         if let openClose = openClose {
@@ -319,7 +319,7 @@ extension TextDocumentSyncOptions: Encodable {
     }
 }
 
-extension TextEdit: Encodable {
+extension TextEdit: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["range"] = range.encode()
@@ -330,7 +330,7 @@ extension TextEdit: Encodable {
 
 
 
-extension LanguageServerProtocol.Range: Encodable {
+extension LanguageServerProtocol.Range: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["start"] = start.encode()
@@ -339,7 +339,7 @@ extension LanguageServerProtocol.Range: Encodable {
     }
 }
 
-extension RequestId: Encodable {
+extension RequestId: TSEncodable {
     public func encode() -> JSValue {
         switch self {
         case let .number(value): return JSValue(Double(value))
@@ -348,13 +348,13 @@ extension RequestId: Encodable {
     }
 }
 
-extension DocumentHighlightKind: Encodable {
+extension DocumentHighlightKind: TSEncodable {
     public func encode() -> JSValue {
         return JSValue(Double(self.rawValue))
     }
 }
 
-extension MarkedString: Encodable {
+extension MarkedString: TSEncodable {
     public func encode() -> JSValue {
         switch self {
         case let .string(value): return JSValue(value)
@@ -367,19 +367,19 @@ extension MarkedString: Encodable {
     }
 }
 
-extension MessageActionItem: Encodable {
+extension MessageActionItem: TSEncodable {
     public func encode() -> JSValue {
         return ["title": JSValue(self.title)]
     }
 }
 
-extension MessageType: Encodable {
+extension MessageType: TSEncodable {
     public func encode() -> JSValue {
         return JSValue(Double(self.rawValue))
     }
 }
 
-extension SignatureInformation: Encodable {
+extension SignatureInformation: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["label"] = label.encode()
@@ -393,25 +393,25 @@ extension SignatureInformation: Encodable {
     }
 }
 
-extension SymbolKind: Encodable {
+extension SymbolKind: TSEncodable {
     public func encode() -> JSValue {
         return JSValue(Double(self.rawValue))
     }
 }
 
-extension TextDocumentSyncKind: Encodable {
+extension TextDocumentSyncKind: TSEncodable {
     public func encode() -> JSValue {
         return JSValue(Double(self.rawValue))
     }
 }
 
-extension CompletionItemKind: Encodable {
+extension CompletionItemKind: TSEncodable {
     public func encode() -> JSValue {
         return JSValue(Double(self.rawValue))
     }
 }
 
-extension SaveOptions: Encodable {
+extension SaveOptions: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         if let include = includeText {
@@ -421,7 +421,7 @@ extension SaveOptions: Encodable {
     }
 }
 
-extension CompletionListResult: Encodable {
+extension CompletionListResult: TSEncodable {
     public func encode() -> JSValue {
         switch self {
         case let .completionItems(items): return JSValue(items.map { $0.encode() })
@@ -430,7 +430,7 @@ extension CompletionListResult: Encodable {
     }
 }
 
-extension ParameterInformation: Encodable {
+extension ParameterInformation: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["label"] = label.encode()
@@ -441,14 +441,14 @@ extension ParameterInformation: Encodable {
     }
 }
 
-extension DidChangeConfigurationParams: Encodable {
+extension DidChangeConfigurationParams: TSEncodable {
     public func encode() -> JSValue {
         return settings.encode() as! JSValue
     }
 }
 
 
-extension CompletionItem: Encodable {
+extension CompletionItem: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["label"] = label.encode()
@@ -491,7 +491,7 @@ extension CompletionItem: Encodable {
     }
 }
 
-extension CompletionList: Encodable {
+extension CompletionList: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["isIncomplete"] = isIncomplete.encode()
@@ -500,13 +500,13 @@ extension CompletionList: Encodable {
     }
 }
 
-extension InsertTextFormat: Encodable {
+extension InsertTextFormat: TSEncodable {
     public func encode() -> JSValue {
         return JSValue(Double(self.rawValue))
     }
 }
 
-extension WorkspaceEdit: Encodable {
+extension WorkspaceEdit: TSEncodable {
     public func encode() -> JSValue {
         switch self {
         case let .changes(changes):
@@ -520,7 +520,7 @@ extension WorkspaceEdit: Encodable {
     }
 }
 
-extension TextDocumentEdit: Encodable {
+extension TextDocumentEdit: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["textDocument"] = textDocument.encode()
@@ -529,7 +529,7 @@ extension TextDocumentEdit: Encodable {
     }
 }
 
-extension VersionedTextDocumentIdentifier: Encodable {
+extension VersionedTextDocumentIdentifier: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["uri"] = uri.encode()
@@ -538,7 +538,7 @@ extension VersionedTextDocumentIdentifier: Encodable {
     }
 }
 
-extension Diagnostic: Encodable {
+extension Diagnostic: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["range"] = range.encode()
@@ -556,7 +556,7 @@ extension Diagnostic: Encodable {
     }
 }
 
-extension DiagnosticCode: Encodable {
+extension DiagnosticCode: TSEncodable {
     public func encode() -> JSValue {
         switch self {
         case let .number(value): return value.encode()
@@ -565,13 +565,13 @@ extension DiagnosticCode: Encodable {
     }
 }
 
-extension DiagnosticSeverity: Encodable {
+extension DiagnosticSeverity: TSEncodable {
     public func encode() -> JSValue {
         return JSValue(Double(self.rawValue))
     }
 }
 
-extension Registration: Encodable {
+extension Registration: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["id"] = id.encode()
@@ -583,7 +583,7 @@ extension Registration: Encodable {
     }
 }
 
-extension ShowMessageParams: Encodable {
+extension ShowMessageParams: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["type"] = type.encode()
@@ -592,7 +592,7 @@ extension ShowMessageParams: Encodable {
     }
 }
 
-extension LogMessageParams: Encodable {
+extension LogMessageParams: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["type"] = type.encode()
@@ -601,7 +601,7 @@ extension LogMessageParams: Encodable {
     }
 }
 
-extension PublishDiagnosticsParams: Encodable {
+extension PublishDiagnosticsParams: TSEncodable {
     public func encode() -> JSValue {
         var json: JSValue = [:]
         json["uri"] = uri.encode()
@@ -610,8 +610,8 @@ extension PublishDiagnosticsParams: Encodable {
     }
 }
 
-extension LanguageServerResponse: Encodable {
-    private func encode<EncodingType>(_ requestId: RequestId, _ encodables: [EncodingType]?) -> JSValue where EncodingType: Encodable {
+extension LanguageServerResponse: TSEncodable {
+    private func encode<EncodingType>(_ requestId: RequestId, _ encodables: [EncodingType]?) -> JSValue where EncodingType: TSEncodable {
         var result: JSValue = nil
         if let e = encodables {
             result = JSValue(e.map { $0.encode() as! JSValue })
@@ -623,11 +623,11 @@ extension LanguageServerResponse: Encodable {
             "result": result]
     }
 
-    private func encode<EncodingType>(_ requestId: RequestId, _ encodable: EncodingType?) -> JSValue where EncodingType: Encodable {
+    private func encode<EncodingType>(_ requestId: RequestId, _ TSEncodable: EncodingType?) -> JSValue where EncodingType: TSEncodable {
         return [
             "jsonrpc": "2.0",
             "id": requestId.encode(),
-            "result": encodable?.encode() as! JSValue? ?? .null]
+            "result": TSEncodable?.encode() as! JSValue? ?? .null]
     }
 
     private func encode(_ requestId: RequestId) -> JSValue {
@@ -637,11 +637,11 @@ extension LanguageServerResponse: Encodable {
             "result": nil]
     }
 
-    private func encode<EncodingType>(_ method: String, _ encodable: EncodingType) -> JSValue where EncodingType: Encodable {
+    private func encode<EncodingType>(_ method: String, _ TSEncodable: EncodingType) -> JSValue where EncodingType: TSEncodable {
         return [
             "jsonrpc": "2.0",
             "method": JSValue(method),
-            "params": encodable.encode() as! JSValue]
+            "params": TSEncodable.encode() as! JSValue]
     }
 
     public func encode() -> JSValue {
