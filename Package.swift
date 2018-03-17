@@ -8,7 +8,10 @@ let package = Package(
         .library(
             name: "LanguageServerProtocol",
             targets: ["LanguageServerProtocol"]),
-    ],
+        .library(
+            name: "JsonRpcProtocol",
+            targets: ["JsonRpcProtocol"]),
+			],
     dependencies: [
         .package(url: "https://github.com/theguild/json-swift.git", from: "4.0.0"),
     ],
