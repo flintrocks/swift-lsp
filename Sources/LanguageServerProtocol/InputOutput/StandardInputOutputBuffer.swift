@@ -55,19 +55,21 @@ public final class StandardInputOutputBuffer: InputOutputBuffer {
                     else if bytesRead > 0 {
                         let messages = messageBuffer.write(data: [UInt8](buffer[0..<bytesRead]))
                         for message in messages {
-                            if let response = received(message) {
-                                let header = response.header.description.data(using: .utf8)!
-                                let content = Data(bytes: response.content)
-                                if #available(macOS 10.12, *) {
+                            self.inputQueue.async {
+                                if let response = received(message) {
+                                  let header = response.header.description.data(using: .utf8)!
+                                  let content = Data(bytes: response.content)
+                                  if #available(macOS 10.12, *) {
                                     os_log("writing header:\n%{public}@", log: log, type: .default, String(data: header, encoding: .utf8)!)
                                     os_log("writing content:\n%{public}@", log: log, type: .default, String(data: content, encoding: .utf8)!)
+                                  }
+                                  FileHandle.standardOutput.write(header)
+                                  FileHandle.standardOutput.write(content)
                                 }
-                                FileHandle.standardOutput.write(header)
-                                FileHandle.standardOutput.write(content)
-                            }
-                            else {
-                                if #available(macOS 10.12, *) {
+                                else {
+                                  if #available(macOS 10.12, *) {
                                     os_log("response was nil", log: log, type: .default)
+                                  }
                                 }
                             }
                         }
